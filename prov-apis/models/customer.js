@@ -23,15 +23,15 @@ const customerSchema = new mongoose.Schema({
     },
     cart: {
         required: false,
-        type: Object
+        type: Array
     },
     pendingOrders: {
         required: false,
-        type: Object
+        type: Array
     },
     pastOrders: {
         required: false,
-        type: Object
+        type: Array
     }
 })
 

@@ -42,6 +42,16 @@
                   class="form-control"
                   id="password"
                   placeholder="Password"
+                  [formControl]="customerSignupForm.controls['RepeatPassword']"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Repeat Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="Rpassword"
+                  placeholder="Password"
                   [formControl]="customerSignupForm.controls['Password']"
                 />
               </div>

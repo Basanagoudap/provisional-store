@@ -10,6 +10,12 @@ import { MainScreenComponent } from './main-screen/main-screen.component';
 import { CustomerLoginComponent } from './customer-login/customer-login.component';
 import { OwnerDashboardComponent } from './owner-login/owner-dashboard/owner-dashboard.component';
 import { CustomerSignupComponent } from './customer-login/customer-signup/customer-signup.component';
+import { CustHomeComponent } from './customer/cust-home/cust-home.component';
+import { CustProfileComponent } from './customer/cust-profile/cust-profile.component';
+import { OwnerProfileComponent } from './owner/owner-profile/owner-profile.component';
+import { PendingOrdersComponent } from './owner/pending-orders/pending-orders.component';
+import { CompletedOrdersComponent } from './owner/completed-orders/completed-orders.component';
+import { AllProductsComponent } from './owner/all-products/all-products.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +24,13 @@ import { CustomerSignupComponent } from './customer-login/customer-signup/custom
     MainScreenComponent,
     CustomerLoginComponent,
     OwnerDashboardComponent,
-    CustomerSignupComponent
+    CustomerSignupComponent,
+    CustHomeComponent,
+    CustProfileComponent,
+    OwnerProfileComponent,
+    PendingOrdersComponent,
+    CompletedOrdersComponent,
+    AllProductsComponent
   ],
   imports: [
     BrowserModule,
