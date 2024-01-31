@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppServicesService } from '../../services/app-services.service';
-import { ProductImageRendererComponent } from '../../owner/product-image-renderer/product-image-renderer.component';
+import { AppServicesService } from 'src/app/services/app-services.service';
+import { ProductImageRendererComponent } from '../product-image-renderer/product-image-renderer.component';
 
 @Component({
-  selector: 'app-pending-orders',
-  templateUrl: './pending-orders.component.html',
-  styleUrls: ['./pending-orders.component.css'],
+  selector: 'app-all-orders',
+  templateUrl: './all-orders.component.html',
+  styleUrls: ['./all-orders.component.css']
 })
-export class PendingOrdersComponent implements OnInit {
+export class AllOrdersComponent implements OnInit {
   rowData;
   colDefs;
   public rowHeight = 50;
@@ -32,14 +32,15 @@ export class PendingOrdersComponent implements OnInit {
     if (!localStorage.getItem('ownerLoggedIn')) {
       this.router.navigate(['/owner-login']);
     }
-    this.getAllPendingOrders();
+    this.getAllOrders();
   }
 
-  async getAllPendingOrders() {
+  async getAllOrders() {
     try {
       this.rowData = await this.appService
-        .getOrdersByStatus('Pending')
+        .getAllOrders()
         .toPromise();
+
         this.rowData.forEach(element => {
           element.purchaseDateStr = new Date(element.purchaseDate*1000);
           element.deliveryDateStr = new Date(element.deliveryDate*1000);

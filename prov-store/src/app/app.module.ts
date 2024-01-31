@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AgGridModule } from "ag-grid-angular";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +16,9 @@ import { CustProfileComponent } from './customer/cust-profile/cust-profile.compo
 import { OwnerProfileComponent } from './owner/owner-profile/owner-profile.component';
 import { PendingOrdersComponent } from './owner/pending-orders/pending-orders.component';
 import { CompletedOrdersComponent } from './owner/completed-orders/completed-orders.component';
-import { AllProductsComponent } from './owner/all-products/all-products.component';
+import { NotFoundComponent } from './not-found/not-found/not-found.component';
+import { ProductImageRendererComponent } from './owner/product-image-renderer/product-image-renderer.component';
+import { AllOrdersComponent } from './owner/all-orders/all-orders.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +33,12 @@ import { AllProductsComponent } from './owner/all-products/all-products.componen
     OwnerProfileComponent,
     PendingOrdersComponent,
     CompletedOrdersComponent,
-    AllProductsComponent
+    NotFoundComponent,
+    ProductImageRendererComponent,
+    AllOrdersComponent
   ],
   imports: [
+    AgGridModule.withComponents([ProductImageRendererComponent]),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

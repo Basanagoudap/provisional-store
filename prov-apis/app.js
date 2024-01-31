@@ -6,12 +6,13 @@ let cors = require("cors");
 let owners = require("./models/owner");
 let customers = require("./models/customer");
 let products = require("./models/product");
+let pendingOrders = require("./models/pending-orders");
 require("dotenv").config();
 const dbStr = process.env.DATABASE_STR;
 
 let jsonParser = bodyParser.json();
 
-app.use(cors())
+app.use(cors());
 
 mongoose.connect(dbStr, {
   useNewUrlParser: true,
@@ -103,6 +104,7 @@ app.get("/product/getAll", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 app.get("/product/search/:name", async (req, res) => {
   try {
     const data = await products.find({
@@ -130,6 +132,72 @@ app.post("/product/post", jsonParser, async (req, res) => {
   }
 });
 
+app.put("/product/update/:id", jsonParser, async (req, res) => {
+  try {
+      const id = req.params.id;
+      const updatedData = req.body;
+      const options = { new: true };
+      const result = await products.findByIdAndUpdate(
+          id, updatedData, options
+      )
+
+      res.status(200).json(result);
+  }
+  catch (error) {
+      res.status(400).json({ message: error.message })
+  }
+});
+
+app.delete("/product/delete/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = await products.findByIdAndDelete(id);
+    res.status(200).json(`${data.name} has been deleted..`);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.get("/orders/getAll", async (req, res) => {
+  try {
+    const data = await pendingOrders.find();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.get("/orders/filter", async (req, res) => {
+  try {
+    const status = req.query;
+    const data = await pendingOrders.find(status);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+});
+
+app.post("/orders/post", jsonParser, async (req, res) => {
+  try {
+    const data = new pendingOrders({
+      name: req.body.name,
+      image: req.body.image,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      buyerName: req.body.buyerName,
+      deliveryDate: req.body.deliveryDate,
+      purchaseDate: req.body.purchaseDate,
+      address: req.body.address,
+      number: req.body.number,
+      status: req.body.status,
+    });
+    const dataToSave = await data.save();
+    res.status(200).json(dataToSave);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

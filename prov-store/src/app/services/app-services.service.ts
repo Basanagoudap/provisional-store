@@ -18,11 +18,24 @@ export class AppServicesService {
   }
 
   addNewCustomer(body): Observable<any[]> {
-    console.log(body, `${this.apiUrl}/customer/post`);
-
     return this.http.post<any>(`${this.apiUrl}/customer/post`, JSON.stringify(body), {
       headers: this.headers
     });
+  }
+
+  addNewProduct(body): Observable<any[]> {
+    return this.http.post<any>(`${this.apiUrl}/product/post`, JSON.stringify(body), {
+      headers: this.headers
+    });
+  }
+
+  updateProduct(id, body): Observable<any[]> {
+    return this.http.put<any>(`${this.apiUrl}/product/update/${id}`, JSON.stringify(body), { headers: this.headers });
+  }
+
+  deleteProducById(productId){
+    return this.http
+    .delete<any[]>(`${this.apiUrl}/product/delete/${productId}`)
   }
 
   getOwnerByEmail(email){
@@ -35,5 +48,13 @@ export class AppServicesService {
   
   getProductByName(string){
     return this.http.get<any[]>(`${this.apiUrl}/product/search/${string}`);
+  }
+
+  getOrdersByStatus(status){
+    return this.http.get<any[]>(`${this.apiUrl}/orders/filter?status=${status}`);
+  }
+  
+  getAllOrders(){
+    return this.http.get<any[]>(`${this.apiUrl}/orders/getAll`);
   }
 }
