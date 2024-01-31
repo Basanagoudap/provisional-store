@@ -1,1 +1,61 @@
-<p>owner-login works!</p>
+<div class="container">
+  <div class="mt-5 row">
+
+    <div class="col-md-6">
+        <h1>Owner Login</h1>
+    </div>
+    <div class="col-md-6">
+      <button class="btn btn-warning float-end" routerLink="/main-screen">Back</button>
+    </div>
+</div>
+  <div class="row mt-5">
+    <div class="col-md-6">
+      <form [formGroup]="ownerLoginForm">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                aria-describedby="emailHelp"
+                placeholder="Enter email"
+                [formControl]="ownerLoginForm.controls['Email']"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Password"
+                [formControl]="ownerLoginForm.controls['Password']"
+              />
+            </div>
+          </div>
+          <div class="card-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="ownerLoginMethod(ownerLoginForm.value)"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-1">
+      <div
+        style="border-left: 1px solid rgba(0, 0, 0, 0.318); height: 100%"
+      ></div>
+    </div>
+    <div class="col-md-5 d-flex align-items-center justify-content-center">
+      <div>
+        <h3>Login Here</h3>
+      </div>
+    </div>
+  </div>
+</div>
