@@ -12,6 +12,8 @@ import { CompletedOrdersComponent } from './owner/completed-orders/completed-ord
 import { PendingOrdersComponent } from './owner/pending-orders/pending-orders.component';
 import { OwnerProfileComponent } from './owner/owner-profile/owner-profile.component';
 import { AllOrdersComponent } from './owner/all-orders/all-orders.component';
+import { CustCartComponent } from './customer/cust-cart/cust-cart.component';
+import { CustBuyComponent } from './customer/cust-buy/cust-buy.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,12 @@ const routes: Routes = [
   },
   {
     path:'customer-profile', component:CustProfileComponent
+  },
+  {
+    path:'customer-cart', component:CustCartComponent
+  },
+  {
+    path:'customer-buy', component:CustBuyComponent
   },
   {
     path:'owner-dashboard', component:OwnerDashboardComponent

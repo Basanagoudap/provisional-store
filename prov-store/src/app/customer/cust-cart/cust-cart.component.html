@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="mt-5 row">
+        <div class="col-md-3">
+          <h1>Cart </h1>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary float-end mx-4" routerLink="/customer-home">
+              Home
+            </button>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-danger float-end mx-4" (click)="logoutCust()">
+            Logout
+          </button>
+        </div>
+      </div>
+
+    <div class="container mt-5">
+        <div class="row" *ngIf="noCart">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <ul class="list-group" *ngFor="let cart of cartData">
+                    <!-- <li class="list-group-item d-flex justify-content-around align-items-center"> -->
+                    <li class="list-group-item">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <h5 >
+                                    {{ cart.name }}
+                                </h5>
+                                
+                            </div>
+                            <div class="col-md-2">
+                                
+                                <button class="btn btn-sm btn-danger" (click)="removeCart(cart.productId, cart.finalPrice)">Remove</button>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn badge bg-primary rounded-pill" (click)="cartIncrement(cart, 'minus')">-</button>
+                                {{ cart.totalQuantity }}
+                                <button class="btn badge bg-primary rounded-pill" (click)="cartIncrement(cart, 'plus')">+</button>
+                                
+                            </div>
+                            <div class="col-md-2">
+                                <h5>
+                                    {{ cart.finalPrice }} Rs
+                                </h5>
+                                
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-2">
+                        <button class="btn btn-warning mt-1" *ngIf="!cartChanged" (click)="updateSingleCart()">Update cart</button>
+                    </div>
+                </div>
+                <ul class="list-group mt-1">
+                    <li class="list-group-item list-group-item-danger"><div class="float-end">
+                        <h4 class="pe-5">
+                            Total = <span style="color: red;">{{totalPrice}}</span>
+                        </h4>
+                    </div></li>
+                  </ul>
+                
+            </div>
+        </div>
+        <div class="row" *ngIf="!noCart">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6 text-center mt-5">
+                <h1>Your Cart is empty!</h1>
+
+            </div>
+        </div>
+    </div>
+</div>
