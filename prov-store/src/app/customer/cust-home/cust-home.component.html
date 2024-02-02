@@ -1,44 +1,55 @@
 <div class="container">
   <div class="mt-5 row">
-    <div class="col-md-11">
-      <h1 class="display-4">Customer Home</h1>
+    <div class="col-md-3">
+      <h1>Customer Home</h1>
     </div>
-    <div class="col-md-1">
-      <button class="btn btn-danger mt-10" (click)="logoutCust()">
+    <div class="col-md-6">
+      <button class="btn btn-primary float-end mx-4" routerLink="/customer-cart">
+        <h5 style="display: inline;" class="pe-2">cart</h5> <span class="badge bg-danger">{{ cartLength }}</span>
+      </button>
+  </div>
+    <div class="col-md-3">
+      <button class="btn btn-danger float-end mx-4" (click)="logoutCust()">
         Logout
       </button>
     </div>
   </div>
-
-  <div class="row" *ngFor="let item of allProds">
-    <div class="col-md-12">
-      <div class="card">
-          <h5 class="card-header">{{ item.name }}</h5>
-          <div class="card-body row">
-              <div class="col-md-3">
-            <img
-              src="{{ item.image }}"
-              alt="image"
-              class="img-fluid"
-              style="max-width: 100%; height: auto"
-            />
+  
+  <div class="row mt-5" *ngFor="let products of allProducts">
+    <div class="card col-md-12">
+      <div class="card-body row">
+        <div class="col-md-3">
+          <img
+            src="{{ products.image }}"
+            class="rounded img-fluid float-left"
+            alt="nothing"
+          />
+        </div>
+        <div class="col-md-6 row" style="background-color: antiquewhite">
+          <div class="col-md-12">
+            <h1 class="card-title">{{ products.name }}</h1>
+          </div>
+          <div class="col-md-12">
+            <h5 class="card-text">
+              {{ products.description }}
+            </h5>
           </div>
           <div class="col-md-6">
-            <h5 class="card-title">{{ item.description }}</h5>
-            <!-- <p class="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p> -->
+            <h3>Price: {{ products.price }} Rs</h3>
           </div>
-          <div class="col-md-3">
-            <button type="button" class="btn btn-warning" (click)="addToCart()">Add To cart</button>
-        <form [formGroup]="cartForm">
-            <!-- <input type="number" value="1" [formControl]="cartForm.controls['cart']" readonly style="margin-top: 50px;">
-            <span><button type="button" class="btn btn-warning" [disabled]="disabled" (click)="increment('plus')">+</button></span>
-            <span class="mx-4"><button type="button" class="btn btn-warning" [disabled]="minusdisabled" (click)="increment('minus')">-</button></span> -->
-            <label for="quantity">Select the Quantity:</label>
-            <input type="number" id="quantity" name="quantity" value="1" min="1" max="5">
-        </form>
+          <div class="col-md-6">
+            <h3>Quantity: {{ products.quantity }} Nos</h3>
+          </div>
+        </div>
+
+        <div
+          class="col-md-3 row d-flex justify-content-center align-items-center"
+        >
+          <div class="col-md-12 text-center">
+            <button class="btn btn-primary px-4" (click)="addToCart(products)"> Add to cart</button>
+          </div>
+          <div class="col-md-12 text-center">
+            <button class="btn btn-success px-4" routerLink="/customer-buy"> Buy Now</button>
           </div>
         </div>
       </div>

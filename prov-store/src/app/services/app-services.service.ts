@@ -17,6 +17,10 @@ export class AppServicesService {
     return this.http.get<any[]>(`${this.apiUrl}/customer/${email}`);
   }
 
+  updateCustomerCart(id, body): Observable<any[]> {
+    return this.http.put<any>(`${this.apiUrl}/customer/update/${id}`, JSON.stringify(body), { headers: this.headers });
+  }
+
   addNewCustomer(body): Observable<any[]> {
     return this.http.post<any>(`${this.apiUrl}/customer/post`, JSON.stringify(body), {
       headers: this.headers
@@ -27,6 +31,10 @@ export class AppServicesService {
     return this.http.post<any>(`${this.apiUrl}/product/post`, JSON.stringify(body), {
       headers: this.headers
     });
+  }
+
+  getCustomerCartLength(email): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/customer/cart-length/${email}`);
   }
 
   updateProduct(id, body): Observable<any[]> {

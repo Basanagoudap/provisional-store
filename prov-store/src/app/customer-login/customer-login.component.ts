@@ -47,6 +47,8 @@ export class CustomerLoginComponent implements OnInit {
     if(this.customerData){
       if(customer.Password == this.customerData.password){
         console.log('SUCCESS');
+        localStorage.setItem('custEmail', customer.Email);
+        localStorage.setItem('custId', this.customerData._id);
         localStorage.setItem('loggedIn', "true")
         this.router.navigate(['/customer-home']);  
       }else{

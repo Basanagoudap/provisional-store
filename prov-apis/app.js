@@ -87,6 +87,31 @@ app.post("/customer/post", jsonParser, async (req, res) => {
   }
 });
 
+app.put("/customer/update/:id", jsonParser, async (req, res) => {
+  try {
+      const id = req.params.id;
+      const updatedData = req.body;
+      const options = { new: true };
+      const result = await customers.findByIdAndUpdate(
+          id, updatedData, options
+      )
+
+      res.status(200).json(result);
+  }
+  catch (error) {
+      res.status(400).json({ message: error.message })
+  }
+});
+
+app.get("/customer/cart-length/:email", async (req, res) => {
+  try {
+    const data = await customers.findOne({ email: req.params.email });
+    res.status(200).json(data.cart.length);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 app.get("/customer/:email", async (req, res) => {
   try {
     const data = await customers.findOne({ email: req.params.email });

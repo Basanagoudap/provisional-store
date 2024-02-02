@@ -19,6 +19,8 @@ import { CompletedOrdersComponent } from './owner/completed-orders/completed-ord
 import { NotFoundComponent } from './not-found/not-found/not-found.component';
 import { ProductImageRendererComponent } from './owner/product-image-renderer/product-image-renderer.component';
 import { AllOrdersComponent } from './owner/all-orders/all-orders.component';
+import { CustCartComponent } from './customer/cust-cart/cust-cart.component';
+import { CustBuyComponent } from './customer/cust-buy/cust-buy.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { AllOrdersComponent } from './owner/all-orders/all-orders.component';
     CompletedOrdersComponent,
     NotFoundComponent,
     ProductImageRendererComponent,
-    AllOrdersComponent
+    AllOrdersComponent,
+    CustCartComponent,
+    CustBuyComponent
   ],
   imports: [
     AgGridModule.withComponents([ProductImageRendererComponent]),

@@ -9,10 +9,11 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./cust-home.component.css'],
 })
 export class CustHomeComponent implements OnInit {
-  allProds: any;
+  allProducts: any;
+  cartLength = 0;
   cartForm;
-  disabled: any;
-  minusdisabled: any;
+  plusDisabled: boolean = false;
+  minusDisabled: boolean = false;
 
   constructor(
     private router: Router,
@@ -31,42 +32,93 @@ export class CustHomeComponent implements OnInit {
       localStorage.getItem('loggedIn') != undefined &&
       localStorage.getItem('loggedIn') !== null
     ) {
+      this.getCartLength()
       this.appService.getAllProducts().subscribe((product) => {
-        this.allProds = product;
+        this.allProducts = product;
       });
     }
   }
 
-  addToCart() {
-    console.log('hiii');
+  getCartLength(){
+    try {
+      this.appService.getCustomerCartLength(localStorage.getItem('custEmail')).subscribe((data: any) => {
+        
+        this.cartLength = data        
+      })
+      
+    } catch (error) {
+      console.error('Error fetching customer cart data:', error);
+      throw error;
+    }
   }
 
   increment(val) {
+    let cartValue = this.cartForm.controls['cart'].value;
     if (val == 'plus') {
-      let add = this.cartForm.controls['cart'].value;
-      this.cartForm.controls['cart'].setValue(add + 1);
-      let totalAdd = this.cartForm.controls['cart'].value;
-      console.log(totalAdd, 'totalAdd');
-
-      if (totalAdd > 4|| totalAdd==0) {
-        this.disabled = true;
-      } else if(totalAdd > 1) {
-        this.disabled = false;
+      if (cartValue == 5) {
+        this.plusDisabled = true;
+        this.minusDisabled = false;
+      } else if (cartValue < 5) {
+        this.plusDisabled = false;
+        this.minusDisabled = false;
+        this.cartForm.controls['cart'].setValue(cartValue + 1);
       }
-    } else {
-      let minus = this.cartForm.controls['cart'].value;
-      this.cartForm.controls['cart'].setValue(minus - 1);
-      let totalMinus=this.cartForm.controls['cart'].value;
-      if (totalMinus>5||totalMinus==0) {
-        this.minusdisabled = true;
-      } else if(totalMinus>1) {
-        this.minusdisabled = false;
+    } else if (val == 'minus') {
+      if (cartValue == 1) {
+        this.plusDisabled = false;
+        this.minusDisabled = true;
+      } else if (cartValue > 1) {
+        this.plusDisabled = false;
+        this.minusDisabled = false;
+        this.cartForm.controls['cart'].setValue(cartValue - 1);
       }
     }
   }
 
+  addToCart(product) {
+    const productToAdd = {
+      productId: product._id,
+      name: product.name,
+      description: product.description,
+      image: product.image,
+      finalPrice: product.price,
+      totalQuantity: '1',
+      actualPrice: product.price,
+    };
+    this.appService
+      .getCustomerByEmail(localStorage.getItem('custEmail'))
+      .subscribe((data: any) => {
+        if (data) {
+          let flag = false;
+          let cart = data.cart;
+          cart.forEach((cart) => {
+            if (productToAdd.productId == cart.productId) {
+              flag = true;
+            }
+          });
+          if (!flag) {
+            cart.push(productToAdd);
+            let body = {
+              cart: cart,
+            };
+            this.appService
+              .updateCustomerCart(data._id, body)
+              .subscribe((added: any) => {
+                if (added) {
+                  this.router.navigate(['/customer-cart']);
+                }
+              });
+          } else {
+            this.router.navigate(['/customer-cart']);
+          }
+        }
+      });
+  }
+
   logoutCust() {
     localStorage.removeItem('loggedIn');
+    localStorage.removeItem('custEmail');
+    localStorage.removeItem('custId');
     this.router.navigate(['/customer-login']);
   }
 }
